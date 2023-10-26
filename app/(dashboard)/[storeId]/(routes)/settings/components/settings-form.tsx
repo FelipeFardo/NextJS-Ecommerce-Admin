@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { ApiAlert } from "@/components/ui/api-alert";
+import { useOrigin } from "@/hooks/use-origin";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -38,6 +39,7 @@ type SettingsFormValues = z.infer<typeof formShema>;
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,35 +49,39 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     defaultValues: initialData,
   });
 
-  const { isDirty } = form.formState;
-
+  
   const onSubmit = async (data: SettingsFormValues) => {
     setIsLoading(true);
-    await toast.promise(axios.patch(`/api/stores/${params.storeId}`, data), {
-      loading: "Saving...",
-      success: () => {
-        router.refresh();
-        return "Store update";
-      },
-      error: "Something went wrong",
-    });
-    setIsLoading(false);
+    try {
+      await toast.promise(axios.patch(`/api/stores/${params.storeId}`, data), {
+        loading: "Saving...",
+        success: () => {
+          router.refresh();
+          return "Store update";
+        },
+        error: "Something went wrong"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onDeleted = async () => {
     setIsLoading(true);
-
-    await toast.promise(axios.delete(`/api/stores/${params.storeId}`), {
-      loading: "Deleting...",
-      success: () => {
-        router.refresh();
-        router.push("/");
-        return "Store deleted";
-      },
-      error: "Make sure you removed all products and categories first",
-    });
-    setIsLoading(false);
-    setIsOpen(false);
+    try {
+      await toast.promise(axios.delete(`/api/stores/${params.storeId}`), {
+        loading: "Deleting...",
+        success: () => {
+          router.refresh();
+          router.push("/");
+          return "Store deleted";
+        },
+        error: "Make sure you removed all products and categories first",
+      });
+    } finally {
+      setIsLoading(false);
+      setIsOpen(false);
+    }
   };
 
   return (
