@@ -49,7 +49,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     defaultValues: initialData,
   });
 
-  
+
   const onSubmit = async (data: SettingsFormValues) => {
     setIsLoading(true);
     try {
@@ -73,7 +73,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         loading: "Deleting...",
         success: () => {
           router.refresh();
-          router.push("/");
+          router.push(`/${params.storeId}/billboards`);
           return "Store deleted";
         },
         error: "Make sure you removed all products and categories first",

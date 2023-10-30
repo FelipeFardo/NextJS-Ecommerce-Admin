@@ -80,7 +80,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
     }
   };
 
-  const onDeleted = async () => {
+  const onDelete = async () => {
     setIsLoading(true);
     try {
       await toast.promise(axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`), {
@@ -88,7 +88,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
         success: () => {
           router.refresh();
           router.push("/");
-          return "BIllboard deleted";
+          return "Billboard deleted";
         },
         error: "Make sure you removed all acategories using this billboard first",
       });
@@ -103,7 +103,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
       <AlertModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        onConfirm={onDeleted}
+        onConfirm={onDelete}
         loading={isLoading}
       />
       <div className="flex items-center justify-between">
@@ -170,7 +170,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
           </Button>
         </form>
       </Form>
-      <Separator />
     </>
   );
 };
