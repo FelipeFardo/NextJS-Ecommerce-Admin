@@ -1,20 +1,19 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 
-import axios from "axios";
-
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ColorColumn } from "./columns";
 import { Button } from "@/components/ui/button";
+
+import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { useState } from "react";
+import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-import { CategoryColumn } from "./columns";
-
 interface CellActionProps {
-  data: CategoryColumn
+  data: ColorColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({
@@ -28,20 +27,20 @@ export const CellAction: React.FC<CellActionProps> = ({
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Category Id copied to the clipboard.");
+    toast.success("Color Id copied to the clipboard.");
   };
 
 
   const onDelete = async () => {
     setIsLoading(true);
     try {
-      await toast.promise(axios.delete(`/api/${params.storeId}/categories/${data.id}`), {
+      await toast.promise(axios.delete(`/api/${params.storeId}/colors/${data.id}`), {
         loading: "Deleting...",
         success: () => {
           router.refresh();
-          return "Category deleted";
+          return "Color deleted";
         },
-        error: "Make sure you removed all products using this category first",
+        error: "Make sure you removed all products using this color first",
       });
     } finally {
       setIsLoading(false);
@@ -72,7 +71,7 @@ export const CellAction: React.FC<CellActionProps> = ({
             <Copy className="mr-2 h-4 w-4" />
             Copy Id
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)}>
+          <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}>
             <Edit className="mr-2 h-4 w-4" />
             Update
           </DropdownMenuItem>
