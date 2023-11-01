@@ -17,7 +17,7 @@ const CategoriesPage = async ({
       billboard: true
     },
     orderBy: {
-      createAt: 'desc'
+      createdAt: 'desc'
     }
   });
 
@@ -26,7 +26,7 @@ const CategoriesPage = async ({
     id: item.id,
     name: item.name,
     billboardLabel: item.billboard.label,
-    createAt: format(item.createAt, "MMMM do, yyyy")
+    createdAt: format(item.createdAt, "MMMM do, yyyy")
   }))
 
 

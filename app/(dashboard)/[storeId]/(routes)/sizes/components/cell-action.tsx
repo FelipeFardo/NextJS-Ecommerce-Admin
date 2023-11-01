@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { CategoryColumn } from "./columns";
+import { SizeColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
@@ -13,7 +13,7 @@ import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
 
 interface CellActionProps {
-  data: CategoryColumn
+  data: SizeColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({
@@ -27,20 +27,20 @@ export const CellAction: React.FC<CellActionProps> = ({
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Category Id copied to the clipboard.");
+    toast.success("Size Id copied to the clipboard.");
   };
 
 
   const onDelete = async () => {
     setIsLoading(true);
     try {
-      await toast.promise(axios.delete(`/api/${params.storeId}/categories/${data.id}`), {
+      await toast.promise(axios.delete(`/api/${params.storeId}/sizes/${data.id}`), {
         loading: "Deleting...",
         success: () => {
           router.refresh();
-          return "Category deleted";
+          return "Size deleted";
         },
-        error: "Make sure you removed all products using this category first",
+        error: "Make sure you removed all products using this size first",
       });
     } finally {
       setIsLoading(false);
@@ -71,7 +71,7 @@ export const CellAction: React.FC<CellActionProps> = ({
             <Copy className="mr-2 h-4 w-4" />
             Copy Id
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)}>
+          <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)}>
             <Edit className="mr-2 h-4 w-4" />
             Update
           </DropdownMenuItem>
