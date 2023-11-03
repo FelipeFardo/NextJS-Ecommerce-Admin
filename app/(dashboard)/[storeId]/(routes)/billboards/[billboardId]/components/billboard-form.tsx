@@ -26,12 +26,12 @@ import { AlertModal } from "@/components/modals/alert-modal";
 
 import ImageUpload from "@/components/ui/image-upload";
 
-const formShema = z.object({
+const formSchema = z.object({
   label: z.string().min(1),
   imageUrl: z.string().min(1),
 });
 
-type BillboardFormValues = z.infer<typeof formShema>;
+type BillboardFormValues = z.infer<typeof formSchema>;
 
 interface BillboardFormProps {
   initialData: Billboard | null;
@@ -52,7 +52,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<BillboardFormValues>({
-    resolver: zodResolver(formShema),
+    resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       label: '',
       imageUrl: ''

@@ -24,12 +24,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-const formShema = z.object({
+const formSchema = z.object({
   name: z.string().min(1),
   value: z.string().min(4).regex(/^#/, { message: "String must be a valid hex code" }),
 });
 
-type ColorFormValues = z.infer<typeof formShema>;
+type ColorFormValues = z.infer<typeof formSchema>;
 
 interface ColorFormProps {
   initialData: Color | null;
@@ -50,7 +50,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<ColorFormValues>({
-    resolver: zodResolver(formShema),
+    resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: '',
       value: ''

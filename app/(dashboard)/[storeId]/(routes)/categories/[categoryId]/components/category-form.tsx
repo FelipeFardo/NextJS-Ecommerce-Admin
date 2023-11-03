@@ -31,12 +31,12 @@ import {
   SelectValue
 } from "@/components/ui/select";
 
-const formShema = z.object({
+const formSchema = z.object({
   name: z.string().min(1),
   billboardId: z.string().min(1),
 });
 
-type CategoryFormValues = z.infer<typeof formShema>;
+type CategoryFormValues = z.infer<typeof formSchema>;
 
 interface CategoryFormProps {
   initialData: Category | null;
@@ -61,7 +61,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<CategoryFormValues>({
-    resolver: zodResolver(formShema),
+    resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: '',
       billboardId: ''

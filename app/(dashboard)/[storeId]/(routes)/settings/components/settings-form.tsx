@@ -30,11 +30,11 @@ interface SettingsFormProps {
   initialData: Store;
 }
 
-const formShema = z.object({
+const formSchema = z.object({
   name: z.string().min(1),
 });
 
-type SettingsFormValues = z.infer<typeof formShema>;
+type SettingsFormValues = z.infer<typeof formSchema>;
 
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const params = useParams();
@@ -45,7 +45,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<SettingsFormValues>({
-    resolver: zodResolver(formShema),
+    resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
 

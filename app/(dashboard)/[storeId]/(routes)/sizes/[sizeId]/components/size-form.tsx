@@ -26,12 +26,12 @@ import { AlertModal } from "@/components/modals/alert-modal";
 import { useOrigin } from "@/hooks/use-origin";
 import ImageUpload from "@/components/ui/image-upload";
 
-const formShema = z.object({
+const formSchema = z.object({
   name: z.string().min(1),
   value: z.string().min(1),
 });
 
-type SizeFormValues = z.infer<typeof formShema>;
+type SizeFormValues = z.infer<typeof formSchema>;
 
 interface SizeFormProps {
   initialData: Size | null;
@@ -52,7 +52,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<SizeFormValues>({
-    resolver: zodResolver(formShema),
+    resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: '',
       value: ''
